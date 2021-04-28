@@ -1,12 +1,15 @@
-from flask import Flask
+from flask import Flask, render_template
+from flask_socketio import SocketIO, send
 
 app = Flask(__name__)
-
+app.config['SECRET_KEY'] = 'jah123'
+socketio = SocketIO(app)
 
 @app.route('/')
-def hello_world():
-    return 'Hello World!'
+def index():
+    """Por defecto va directamente a la carpeta templates a buscar el archivo html"""
+    return render_template("index.html")
 
 
 if __name__ == '__main__':
-    app.run()
+    socketio.run(app)
