@@ -13,6 +13,8 @@ def index():
 @socketio.on("message")
 def handleMessage(msg):
     print("Message: " + msg)
+    """Broadcast permite enviarselas a todos los clientes"""
+    send(msg, broadcast=True)
 
 if __name__ == '__main__':
     socketio.run(app)

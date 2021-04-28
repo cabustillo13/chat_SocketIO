@@ -11,8 +11,8 @@
     <input type="text" id="myMessage">
     <button type="button" id="send">Enviar</button>
 
-    <!-Para jQuery-->
-    <--!Este link lo descargue de: http://code.jquery.com/ -->
+    <!--Para jQuery-->
+    <!--Este link lo descargue de: http://code.jquery.com/ -->
     <script
         src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
@@ -23,11 +23,26 @@
     <!--Este link lo descargue de* https://socket.io/docs/v3/client-installation/index.html/ -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.3/socket.io.min.js"></script>
 
-    <--!Main-->
+    <!--Main-->
     <script>
         const socket = io();
         /**Testear que la conexión se estableció correctamente**/
-        socket.emit("message", "hello");
+        //socket.emit("message", "hello");
+
+        /**Cuando el servido escuche message**/
+        socket.on('message', function (msg) {
+            $('#messages').append('<li>' + msg + '</li>')
+        })
+
+        /**Cuando haga click en el botón voy a obtener el valor del mensaje**/
+        $('#send').on('click',function () {
+            /**Enviar lo que escribí a mi servidor para que a todos mis clientes le llegue el mensaje**/
+            console.log($('#myMessage').val());
+            socket.send($('#myMessage').val());
+
+            /**Una vez enviado el mensaje, limpia el campo del mensaje**/
+             $('#myMessage').val('');
+        })
     </script>
 </body>
 </html>
